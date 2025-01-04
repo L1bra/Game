@@ -7,7 +7,7 @@
 // to_string
 #include <sstream>
 
-// 
+//
 #include <cmath>
 
 
@@ -23,12 +23,12 @@ namespace sf
 
 namespace gui
 {
-	//template<typename T>
-	//void center_origin(T& ent)
-	//{
-	//	sf::FloatRect bounds = ent.getLocalBounds();
-	//	ent.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
-	//}
+	template<typename T>
+	void center_origin(T& ent)
+	{
+		sf::FloatRect bounds = ent.getLocalBounds();
+		ent.setOrigin({ std::floor(bounds.size.x / 2.f), std::floor(bounds.size.y / 2.f) });
+	}
 
 	template<typename T>
 	float p2px(const float p, const T& vm)

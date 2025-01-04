@@ -30,7 +30,7 @@ namespace GUI
 	void Button::set_text(const std::string& text)
 	{
 		m_text.setString(text);
-		//gui::center_origin<sf::Text>(m_text);
+		gui::center_origin<sf::Text>(m_text);
 	}
 
 	void Button::set_characted_size(unsigned int size)

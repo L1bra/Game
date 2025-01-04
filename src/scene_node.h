@@ -15,22 +15,22 @@
 class SceneNode : public sf::Transformable, public sf::Drawable
 {
 public:
-	typedef std::unique_ptr<SceneNode> Ptr;
+	typedef std::unique_ptr<SceneNode> pNode;
 private:
-	std::vector<Ptr> m_children;
+	std::vector<pNode> m_children;
 	SceneNode* m_parent;
 private:
 	virtual void update_current(sf::Time dt);
 	void update_children(sf::Time dt);
-	
+
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
 	void draw_children(sf::RenderTarget& target, sf::RenderStates states) const;
 public:
 	SceneNode();
 
-	void attach_child(Ptr child);
-	Ptr detach_child(const SceneNode& node);
+	void attach_child(pNode child);
+	pNode detach_child(const SceneNode& node);
 
 	void update(sf::Time dt);
 

@@ -11,7 +11,7 @@
 #include <algorithm>
 
 
-class Player
+class PlayerController
 {
 public:
 	enum Action
@@ -30,7 +30,7 @@ private:
 	void initialize_actions();
 	static bool is_realtime_action(Action action);
 public:
-	Player();
+	PlayerController();
 
 	void handle_event(const std::optional<sf::Event> event, CommandQueue& commands);
 	void handle_realtime_input(CommandQueue& commands);

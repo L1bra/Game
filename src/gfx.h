@@ -33,12 +33,15 @@ static const std::map<std::string, Options> opt_strings
 
 class GFX
 {
-private:
-    Options resolve(const std::string& input);
 public:
     GFX();
     ~GFX();
 
+    bool save(const std::string& path);
+    bool load(const std::string& path);
+private:
+    Options resolve(const std::string& input);
+public:
     std::string title;
     sf::VideoMode resolution;
     std::vector<sf::VideoMode> vms;
@@ -47,7 +50,5 @@ public:
     bool vsync;
 
     unsigned int framerate;
-
-    bool save(const std::string& path);
-    bool load(const std::string& path);
 };
+

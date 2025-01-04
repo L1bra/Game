@@ -13,10 +13,10 @@ SettingsState::SettingsState(StateStack& stack, Context context)
 	m_background_shape.setFillColor(sf::Color::Black);
 
 	// build key binding button and lables
-	add_button_label(Player::MoveLeft, 150.f, "Move Left", context);
-	add_button_label(Player::MoveRight, 200.f, "Move Right", context);
-	add_button_label(Player::MoveUp, 250.f, "Move Up", context);
-	add_button_label(Player::MoveDown, 300.f, "Move Down", context);
+	add_button_label(PlayerController::MoveLeft, 150.f, "Move Left", context);
+	add_button_label(PlayerController::MoveRight, 200.f, "Move Right", context);
+	add_button_label(PlayerController::MoveUp, 250.f, "Move Up", context);
+	add_button_label(PlayerController::MoveDown, 300.f, "Move Down", context);
 
 	update_labels();
 
@@ -47,14 +47,14 @@ bool SettingsState::handle_event(const std::optional<sf::Event> event)
 	bool is_key_binding = false;
 
 	// iterate through all key binding buttons to see if they are being pressed, waiting for the user to enter a key
-	for (std::size_t action = 0; action < Player::ActionCount; ++action)
+	for (std::size_t action = 0; action < PlayerController::ActionCount; ++action)
 	{
 		if (m_binding_buttons[action]->is_active())
 		{
 			is_key_binding = true;
 			if (event->is<sf::Event::KeyReleased>())
 			{
-				get_context().m_player->assign_key(static_cast<Player::Action>(action), event->getIf<sf::Event::KeyPressed>()->code);
+				get_context().m_player_controller->assign_key(static_cast<PlayerController::Action>(action), event->getIf<sf::Event::KeyPressed>()->code);
 				m_binding_buttons[action]->deactivate();
 			}
 			break;
@@ -72,16 +72,16 @@ bool SettingsState::handle_event(const std::optional<sf::Event> event)
 
 void SettingsState::update_labels()
 {
-	Player& player = *get_context().m_player;
+	PlayerController& player_controller = *get_context().m_player_controller;
 
-	for (std::size_t i = 0; i < Player::ActionCount; ++i)
+	for (std::size_t i = 0; i < PlayerController::ActionCount; ++i)
 	{
-		sf::Keyboard::Key key = player.get_assigned_key(static_cast<Player::Action>(i));
+		sf::Keyboard::Key key = player_controller.get_assigned_key(static_cast<PlayerController::Action>(i));
 		//m_binding_labels[i]->set_text(to_string(key));
 	}
 }
 
-void SettingsState::add_button_label(Player::Action action, float y, const std::string& text, Context context)
+void SettingsState::add_button_label(PlayerController::Action action, float y, const std::string& text, Context context)
 {
 	const auto vm = context.m_window->get_gfx().resolution;
 

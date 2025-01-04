@@ -10,7 +10,10 @@ sf::Texture& TileMap::Textures::get(const std::string& name)
 {
 	auto& data = instance().data;
 	if (data.count(name) == 0)
-		data[name].loadFromFile(TileMap::path + name);
+	{
+		if (!data[name].loadFromFile(TileMap::path + name))
+			printf("Failed %s\n", name.c_str());
+	}
 
 	return instance().data.at(name);
 }
@@ -19,7 +22,8 @@ TileMap::Layer::Layer(const ldtk::Layer& layer, sf::RenderTexture& render_textur
 	:
 	m_render_texture(render_texture)
 {
-	m_tileset_texture = &Textures::get(layer.getTileset().path);
+    // m_tileset_texture = &Textures::get(layer.getTileset().path); // TODO: path is null
+    m_tileset_texture = &Textures::get("Example_TileSet.ldtk");
 	m_vertex_array.resize(layer.allTiles().size() * 4);
 	m_vertex_array.setPrimitiveType(sf::PrimitiveType::Triangles);
 
@@ -67,7 +71,8 @@ void TileMap::load(const ldtk::Level& level)
 	{
 		m_layers.insert({ layer.getName(), {layer, m_render_texture} });
 	}
-	//m_render_texture.resize({ level.size.x, level.size.y });
+
+	m_render_texture.resize({ static_cast<unsigned int>(level.size.x), static_cast<unsigned int>(level.size.y) });
 }
 
 const TileMap::Layer& TileMap::get_layer(const std::string& name) const

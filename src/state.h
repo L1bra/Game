@@ -12,7 +12,7 @@
 #include <memory>
 
 class StateStack;
-class Player;
+class PlayerController;
 
 class State
 {
@@ -21,12 +21,12 @@ public:
 
 	struct Context
 	{
-		Context(Window& window, TextureHolder& textures, FontHolder& fonts, Player& player, ldtk::Project& project);
+		Context(Window& window, TextureHolder& textures, FontHolder& fonts, PlayerController& player, ldtk::Project& project);
 
 		Window* m_window;
 		TextureHolder* m_textures;
 		FontHolder* m_fonts;
-		Player* m_player;
+		PlayerController* m_player_controller;
 		ldtk::Project* m_ldtk_project;
 	};
 

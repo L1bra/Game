@@ -6,11 +6,9 @@ MenuState::MenuState(StateStack& stack, Context context)
 	m_gui_container()
 {
 	const sf::Vector2f view_size = context.m_window->get_view().getSize();
-	const auto vm = context.m_window->get_gfx().resolution;
-	const sf::Vector2f scale{ view_size.x / game_resolution.x, view_size.y / game_resolution.y };
+	const sf::VideoMode vm = context.m_window->get_gfx().resolution;
 
-	m_background_shape.setSize(game_resolution);
-	m_background_shape.setScale(scale);
+	m_background_shape.setSize({ static_cast<float>(vm.size.x), static_cast<float>(vm.size.y) });
 	m_background_shape.setFillColor(sf::Color::Black);
 
 	auto play_button = std::make_shared<GUI::Button>(*context.m_fonts, *context.m_textures);

@@ -11,18 +11,18 @@ SceneNode::SceneNode()
 }
 
 
-void SceneNode::attach_child(Ptr child)
+void SceneNode::attach_child(pNode child)
 {
 	child->m_parent = this;
 	m_children.push_back(std::move(child));
 }
 
-SceneNode::Ptr SceneNode::detach_child(const SceneNode& node)
+SceneNode::pNode SceneNode::detach_child(const SceneNode& node)
 {
-	auto found = std::find_if(m_children.begin(), m_children.end(), [&](Ptr& p) { return p.get() == &node; });
+	auto found = std::find_if(m_children.begin(), m_children.end(), [&](pNode& p) { return p.get() == &node; });
 	assert(found != m_children.end());
 
-	Ptr result = std::move(*found);
+	pNode result = std::move(*found);
 	result->m_parent = nullptr;
 	m_children.erase(found);
 	return result;

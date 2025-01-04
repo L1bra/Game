@@ -6,8 +6,8 @@ PlayerMagic::PlayerMagic(const TextureHolder& textures)
 	m_sprite(textures.get(Textures::MAGIC0)),
 	m_type(Magic0)
 {
-	//sf::FloatRect bounds = m_sprite.getLocalBounds();
-	//m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+	sf::FloatRect bounds = m_sprite.getLocalBounds();
+	m_sprite.setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
 }
 
 PlayerMagic::~PlayerMagic()

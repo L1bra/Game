@@ -15,7 +15,7 @@ TitleState::TitleState(StateStack& stack, Context context)
 	m_text.setFillColor(sf::Color::White);
 	m_text.setString("Press any key to start");
 
-	//gui::center_origin<sf::Text>(m_text);
+	gui::center_origin<sf::Text>(m_text);
 	m_text.setPosition(context.m_window->get_view().getSize() / 2.f);
 }
 

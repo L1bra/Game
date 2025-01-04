@@ -2,7 +2,7 @@
 
 #include "state.h"
 #include "window.h"
-#include "player.h"
+#include "player_controller.h"
 #include "container.h"
 #include "button.h"
 #include "label.h"
@@ -25,11 +25,11 @@ public:
 
 private:
 	void update_labels();
-	void add_button_label(Player::Action action, float y, const std::string& text, Context context);
+	void add_button_label(PlayerController::Action action, float y, const std::string& text, Context context);
 private:
 	sf::RectangleShape m_background_shape;
 	GUI::Container m_gui_container;
 
-	std::array<GUI::Button::Ptr, Player::ActionCount> m_binding_buttons;
-	std::array<GUI::Label::Ptr, Player::ActionCount> m_binding_labels;
+	std::array<GUI::Button::Ptr, PlayerController::ActionCount> m_binding_buttons;
+	std::array<GUI::Label::Ptr, PlayerController::ActionCount> m_binding_labels;
 };

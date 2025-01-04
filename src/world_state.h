@@ -1,7 +1,7 @@
 #pragma once
 
 #include "state.h"
-#include "player.h"
+#include "player_controller.h"
 #include "utility.h"
 #include "sprite_node.h"
 
@@ -37,13 +37,13 @@ public:
     CommandQueue& get_command_queue();
 
 private:
-    ldtk::Project& m_ldtk_project;
-    TileMap m_tile_map;
-    Player& m_player;
+    // ldtk::Project& m_ldtk_project;
+    // TileMap m_tile_map;
+
+    PlayerController& m_player_controller;
     PlayerMagic* m_player_entity;
 
     Window& m_window;
-    sf::View m_world_view;
     TextureHolder m_textures;
 
     SceneNode m_scene_graph;
@@ -51,6 +51,8 @@ private:
     CommandQueue m_command_queue;
 
     sf::FloatRect m_world_bounds;
+    sf::RectangleShape m_background_shape;
+    sf::View m_world_view;
     sf::Vector2f m_spawn_position;
     float m_scroll_speed;
 };

@@ -1,4 +1,4 @@
-#include "player.h"
+#include "player_controller.h"
 
 
 struct MagicMover
@@ -17,7 +17,7 @@ struct MagicMover
 	}
 };
 
-Player::Player()
+PlayerController::PlayerController()
 {
 	// Set initial key binding
 	m_key_binding[sf::Keyboard::Key::Left] = MoveLeft;
@@ -33,7 +33,7 @@ Player::Player()
 		pair.second.category = Category::PlayerEntity;
 }
 
-void Player::handle_event(const std::optional<sf::Event> event, CommandQueue& commands)
+void PlayerController::handle_event(const std::optional<sf::Event> event, CommandQueue& commands)
 {
 	if (event->is<sf::Event::KeyPressed>())
 	{
@@ -46,7 +46,7 @@ void Player::handle_event(const std::optional<sf::Event> event, CommandQueue& co
 	}
 }
 
-void Player::handle_realtime_input(CommandQueue& commands)
+void PlayerController::handle_realtime_input(CommandQueue& commands)
 {
 	// Traverse all assigned keys and check if they are pressed
 	for (auto& pair : m_key_binding)
@@ -59,7 +59,7 @@ void Player::handle_realtime_input(CommandQueue& commands)
 	}
 }
 
-void Player::assign_key(Action action, sf::Keyboard::Key key)
+void PlayerController::assign_key(Action action, sf::Keyboard::Key key)
 {
 	// Remove all keys that already map to action
 	for (auto it = m_key_binding.begin(); it != m_key_binding.end();)
@@ -74,7 +74,7 @@ void Player::assign_key(Action action, sf::Keyboard::Key key)
 	m_key_binding[key] = action;
 }
 
-sf::Keyboard::Key Player::get_assigned_key(Action action) const
+sf::Keyboard::Key PlayerController::get_assigned_key(Action action) const
 {
 	for (auto& pair : m_key_binding)
 	{
@@ -85,7 +85,7 @@ sf::Keyboard::Key Player::get_assigned_key(Action action) const
 	return sf::Keyboard::Key::Unknown;
 }
 
-void Player::initialize_actions()
+void PlayerController::initialize_actions()
 {
 	const float player_speed = 200.f;
 
@@ -95,7 +95,7 @@ void Player::initialize_actions()
 	m_action_binding[MoveDown].action	= derived_action<PlayerMagic>(MagicMover(0.f, +player_speed));
 }
 
-bool Player::is_realtime_action(Action action)
+bool PlayerController::is_realtime_action(Action action)
 {
 	switch (action)
 	{

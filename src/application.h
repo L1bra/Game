@@ -3,7 +3,7 @@
 #include "window.h"
 #include "resource_manager.h"
 #include "resource_identifier.h"
-#include "player.h"
+#include "player_controller.h"
 #include "state_stack.h"
 
 #include "title_state.h"
@@ -37,7 +37,7 @@ private:
     Window m_window;
     TextureHolder m_textures;
     FontHolder m_fonts;
-    Player m_player;
+    PlayerController m_player_controller;
 
     StateStack m_state_stack;
     ldtk::Project m_ldtk_project;
