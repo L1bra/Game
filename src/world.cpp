@@ -2,14 +2,16 @@
 #include <cmath>
 
 
-World::World(Window& window, FontHolder& fonts)
+World::World(sf::RenderTarget& target, FontHolder& fonts)
 	:
+	m_target(target),
     // m_ldtk_project(*context.m_ldtk_project),
     // m_tile_map(),
-	m_player_controller(*context.m_player_controller),
+	//m_player_controller(*context.m_player_controller),
 	m_player_entity(nullptr),
-	m_window(*context.m_window),
+	//m_window(*context.m_window),
 	m_textures(),
+	m_fonts(fonts),
 	m_scene_graph(),
 	m_scene_layers(),
 	m_background_shape({2000.f, 2000.f}),
@@ -25,9 +27,13 @@ World::World(Window& window, FontHolder& fonts)
 
 void  World::update(sf::Time dt)
 {
+	// Scroll the world
+	//m_world_view.move({ 0.f, m_scroll_speed * dt.asSeconds() });
     m_player_entity->set_velocity(0.f, 0.f);
 
-	// Forward commands to the scene graph, adapt velocity (diagonal correction)
+	//m_player_controller.handle_realtime_input(m_command_queue);
+
+	// Forward commands to the scene graph
 	while (!m_command_queue.is_empty())
 	{
 		m_scene_graph.on_command(m_command_queue.pop(), dt);
@@ -43,10 +49,10 @@ void  World::update(sf::Time dt)
 
 void World::draw()
 {
-	m_window.set_view(m_world_view);
+	//m_window.set_view(m_world_view);
 	// Window class internally calls SceneNode::draw() function
-	m_window.draw(m_background_shape);
-	m_window.draw(m_scene_graph);
+	m_target.draw(m_background_shape);
+	m_target.draw(m_scene_graph);
 	//m_window.draw(m_tile_map.get_layer("Terrain"));
 }
 
@@ -89,7 +95,7 @@ void World::build_scene()
     // m_scene_layers[Layer::Background]->attach_child(std::move(background_sprite));
 
 	// Add player
-    std::unique_ptr<PlayerMagic> magic = std::make_unique<PlayerMagic>(m_textures);
+    std::unique_ptr<GameActor> magic = std::make_unique<GameActor>(GameActor::Type::Self, m_textures, m_fonts);
     m_player_entity = magic.get();
     m_player_entity->setPosition(m_spawn_position);
     m_player_entity->set_velocity(100.f, 100.f);

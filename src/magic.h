@@ -1,29 +1,40 @@
 #include "entity.h"
 #include "resource_identifier.h"
 #include "resource_manager.h"
+#include "text_node.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
 
-class PlayerMagic : public Entity
+class GameActor : public Entity
 {
-private:
-    sf::Sprite m_sprite;
+public:
     enum Type
     {
-        Magic0,
-        Magic1,
-        Magic2
+        Self,
+        Enemy0,
+        Enemy1,
+        Enemy2,
+        TypeCount
     };
+public:
+    GameActor(Type type, const TextureHolder& textures, const FontHolder& fonts);
+    ~GameActor();
+
+    virtual unsigned int get_category() const;
+    sf::RectangleShape& get_character_sprite();
+private:
+    virtual void update_current(sf::Time dt) override;
+    virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    void update_texts();
 public:
     Type m_type;
 private:
-    virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
-public:
-    PlayerMagic(const TextureHolder& textures);
-    ~PlayerMagic();
+    // sf::Sprite m_sprite;
+    sf::RectangleShape m_shape;
 
-    virtual unsigned int get_category() const;
+    TextNode* m_health_display;
 };

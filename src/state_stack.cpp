@@ -23,7 +23,7 @@ void StateStack::update(sf::Time dt)
 
 void StateStack::draw()
 {
-	for (State::Ptr& state : m_stack)
+	for (State::pState& state : m_stack)
 	{
 		state->draw();
 	}
@@ -59,7 +59,7 @@ bool StateStack::is_empty() const
 	return m_stack.empty();
 }
 
-State::Ptr StateStack::create_state(States::ID state_id)
+State::pState StateStack::create_state(States::ID state_id)
 {
 	auto found = m_factories.find(state_id);
 	assert(found != m_factories.end());

@@ -1,31 +1,70 @@
 #include "magic.h"
 
+#include "data_tables.h"
 
-PlayerMagic::PlayerMagic(const TextureHolder& textures)
+
+namespace
+{
+    const std::vector<EntityData> DataTable = initialize_entity_data();
+}
+
+
+GameActor::GameActor(Type type, const TextureHolder& textures, const FontHolder& fonts)
 	:
-	m_sprite(textures.get(Textures::MAGIC0)),
-	m_type(Magic0)
+    Entity(DataTable[type].hitpoints),
+    m_type(type),
+    m_shape({16.f, 16.f})
 {
-	sf::FloatRect bounds = m_sprite.getLocalBounds();
-	m_sprite.setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
+    m_shape.setFillColor(sf::Color::Yellow);
+    sf::FloatRect bounds = m_shape.getLocalBounds();
+	m_shape.setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
+
+    std::unique_ptr<TextNode> health_display = std::make_unique<TextNode>(fonts, "");
+    m_health_display = health_display.get();
+    this->attach_child(std::move(health_display));
 }
 
-PlayerMagic::~PlayerMagic()
+GameActor::~GameActor()
 {
 }
 
-void PlayerMagic::draw_current(sf::RenderTarget& target, sf::RenderStates states) const
+void GameActor::update_current(sf::Time dt)
 {
-	target.draw(m_sprite, states);
+    (this->get_velocity().x || this->get_velocity().y) ? m_shape.setFillColor(sf::Color::Red) : m_shape.setFillColor(sf::Color::Yellow);
+
+    Entity::update_current(dt);
+
+    update_texts();
 }
 
-unsigned int PlayerMagic::get_category() const
+void GameActor::draw_current(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	switch (m_type)
-	{
-		case Magic0:	return Category::PlayerEntity;
-		case Magic1:	return Category::AlliedEntity;
-		case Magic2:	return Category::AlliedEntity;
-		default:		return Category::EnemyEntity;
-	}
+	target.draw(m_shape, states);
+}
+
+void GameActor::update_texts()
+{
+    m_health_display->set_string(std::to_string(get_hitpoints()) + "HP");
+    m_health_display->setPosition({ 0.f, 20.f });
+    //m_health_display->setRotation(-getRotation());
+}
+
+sf::RectangleShape& GameActor::get_character_sprite()
+{
+    return m_shape;
+}
+
+unsigned int GameActor::get_category() const
+{
+     switch (m_type)
+     {
+        case Self:      return Category::PlayerEntity;
+     	case Enemy0:
+        case Enemy1:
+        case Enemy2:
+     	                return Category::EnemyEntity;
+        default:        return Category::None;
+     }
+
+    return Category::PlayerEntity;
 }

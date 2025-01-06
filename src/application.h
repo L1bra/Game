@@ -9,7 +9,7 @@
 #include "title_state.h"
 #include "menu_state.h"
 #include "settings_state.h"
-#include "world_state.h"
+#include "game_state.h"
 #include "pause_state.h"
 
 // LDtk

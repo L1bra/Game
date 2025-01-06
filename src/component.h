@@ -16,7 +16,7 @@ namespace GUI
 	class Component : public sf::Drawable, public sf::Transformable
 	{
 	public:
-		typedef std::shared_ptr<Component> Ptr;
+		typedef std::shared_ptr<Component> pComponent;
 
 	public:
 		Component();

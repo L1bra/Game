@@ -30,6 +30,6 @@ private:
 	sf::RectangleShape m_background_shape;
 	GUI::Container m_gui_container;
 
-	std::array<GUI::Button::Ptr, PlayerController::ActionCount> m_binding_buttons;
-	std::array<GUI::Label::Ptr, PlayerController::ActionCount> m_binding_labels;
+	std::array<GUI::Button::pButton, PlayerController::ActionCount> m_binding_buttons;
+	std::array<GUI::Label::pLabel, PlayerController::ActionCount> m_binding_labels;
 };

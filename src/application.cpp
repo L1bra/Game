@@ -70,12 +70,8 @@ void Application::start()
         draw();
     }
 }
-
+// TODO: Add GameState which will have a pointer to World state to retrieve CommandQueue from it.
 void Application::input()
-{
-}
-
-void Application::update(sf::Time dt)
 {
     while(std::optional<sf::Event> event = m_window.get_SFML_window().pollEvent())
     {
@@ -90,6 +86,10 @@ void Application::update(sf::Time dt)
 
         m_state_stack.handle_event(event);
     }
+}
+
+void Application::update(sf::Time dt)
+{
 
     m_state_stack.update(dt);
 }
@@ -112,7 +112,7 @@ void Application::update_statistic(sf::Time et)
 
     if (m_statistic_update_time >= sf::seconds(1.0f))
     {
-        //m_statistic_text.setString("FPS: " + to_string(m_statistic_num_frames));
+        m_statistic_text.setString("FPS: " + std::to_string(m_statistic_num_frames));
         m_statistic_update_time -= sf::seconds(1.0f);
         m_statistic_num_frames = 0;
     }
@@ -123,7 +123,7 @@ void Application::register_states()
     m_state_stack.register_state<TitleState>(States::Title);
     m_state_stack.register_state<MenuState>(States::Menu);
     m_state_stack.register_state<SettingsState>(States::Settings);
-    m_state_stack.register_state<WorldState>(States::World);
+    m_state_stack.register_state<GameState>(States::Game);
     m_state_stack.register_state<PauseState>(States::Pause);
 }
 

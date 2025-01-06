@@ -12,21 +12,13 @@
 #include "tile_map.h"
 
 
-class WorldState : public State
+class World
 {
-private:
-    enum Layer
-    {
-        Background,
-        Ground,
-        LayerCount
-    };
 public:
-    WorldState(StateStack& stack, Context context);
+    explicit World(sf::RenderTarget& target, FontHolder& fonts);
 
-    virtual void draw();
-    virtual bool update(sf::Time dt);
-    virtual bool handle_event(const std::optional<sf::Event> event);
+    void draw();
+    void update(sf::Time dt);
 
     void load_textures();
     void build_scene();
@@ -35,16 +27,23 @@ public:
     void adapt_player_velocity();
     // TODO:
     CommandQueue& get_command_queue();
-
+private:
+    enum Layer
+    {
+        Background,
+        Ground,
+        LayerCount
+    };
 private:
     // ldtk::Project& m_ldtk_project;
     // TileMap m_tile_map;
 
-    PlayerController& m_player_controller;
-    PlayerMagic* m_player_entity;
+    //PlayerController& m_player_controller;
+    GameActor* m_player_entity;
 
-    Window& m_window;
+    sf::RenderTarget& m_target;
     TextureHolder m_textures;
+    FontHolder& m_fonts;
 
     SceneNode m_scene_graph;
     std::array<SceneNode*, Layer::LayerCount> m_scene_layers;

@@ -15,7 +15,7 @@ namespace GUI
 	class Label : public Component
 	{
 	public:
-		typedef std::shared_ptr<Label> Ptr;
+		typedef std::shared_ptr<Label> pLabel;
 	public:
 		Label(const std::string& text, const FontHolder& fonts);
 

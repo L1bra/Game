@@ -9,7 +9,7 @@ namespace GUI
 	{
 	}
 
-	void Container::pack(Component::Ptr component)
+	void Container::pack(Component::pComponent component)
 	{
 		m_children.push_back(component);
 
@@ -57,7 +57,7 @@ namespace GUI
 	{
 		states.transform *= getTransform();
 
-		for (const Component::Ptr& child : m_children)
+		for (const Component::pComponent& child : m_children)
 			target.draw(*child, states);
 	}
 

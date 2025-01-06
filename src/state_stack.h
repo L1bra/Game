@@ -38,7 +38,7 @@ public:
 
 	bool is_empty() const;
 private:
-	State::Ptr create_state(States::ID state_id);
+	State::pState create_state(States::ID state_id);
 	void apply_pending_changes();
 private:
 	struct PendingChange
@@ -50,11 +50,11 @@ private:
 	};
 
 private:
-	std::vector<State::Ptr> m_stack;
+	std::vector<State::pState> m_stack;
 	std::vector<PendingChange> m_pending_list;
 
 	State::Context m_context;
-	std::map<States::ID, std::function<State::Ptr()>> m_factories;
+	std::map<States::ID, std::function<State::pState()>> m_factories;
 };
 
 
@@ -63,6 +63,6 @@ void StateStack::register_state(States::ID state_id)
 {
 	m_factories[state_id] = [this]()
 	{
-		return State::Ptr(new T(*this, m_context));
+		return State::pState(new T(*this, m_context));
 	};
 }

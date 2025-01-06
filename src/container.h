@@ -15,12 +15,12 @@ namespace GUI
 	class Container : public Component
 	{
 	public:
-		typedef std::shared_ptr<Container> Ptr;
+		typedef std::shared_ptr<Container> pContainer;
 
 	public:
 		Container();
 
-		void pack(Component::Ptr component);
+		void pack(Component::pComponent component);
 
 		virtual bool is_selectable() const;
 		virtual void handle_event(const std::optional<sf::Event> event);
@@ -32,7 +32,7 @@ namespace GUI
 		void select_next();
 		void select_previous();
 	private:
-		std::vector<Component::Ptr> m_children;
+		std::vector<Component::pComponent> m_children;
 		int m_selected_child;
 	};
 }

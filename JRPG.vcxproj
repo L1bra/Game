@@ -148,7 +148,10 @@
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\container.cpp" />
-    <ClCompile Include="src\world_state.cpp" />
+    <ClCompile Include="src\data_tables.cpp" />
+    <ClCompile Include="src\game_state.cpp" />
+    <ClCompile Include="src\text_node.cpp" />
+    <ClCompile Include="src\world.cpp" />
     <ClCompile Include="src\command.cpp" />
     <ClCompile Include="src\command_queue.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -276,7 +279,10 @@
     <ClInclude Include="src\button.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\container.h" />
-    <ClInclude Include="src\world_state.h" />
+    <ClInclude Include="src\data_tables.h" />
+    <ClInclude Include="src\game_state.h" />
+    <ClInclude Include="src\text_node.h" />
+    <ClInclude Include="src\world.h" />
     <ClInclude Include="src\category.h" />
     <ClInclude Include="src\command.h" />
     <ClInclude Include="src\command_queue.h" />

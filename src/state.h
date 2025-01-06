@@ -17,7 +17,7 @@ class PlayerController;
 class State
 {
 public:
-	typedef std::unique_ptr<State> Ptr;
+	typedef std::unique_ptr<State> pState;
 
 	struct Context
 	{
