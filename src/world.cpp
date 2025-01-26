@@ -1,7 +1,7 @@
 #include "world.h"
 
 #include <cmath>
-#include <cstdlib>
+#include <cstdlib> // srand
 
 World::World(sf::RenderTarget& target, FontHolder& fonts)
 	:

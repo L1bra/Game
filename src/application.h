@@ -12,9 +12,6 @@
 #include "game_state.h"
 #include "pause_state.h"
 
-// LDtk
-#include <LDtkLoader/Project.hpp>
-
 
 class Application
 {
@@ -40,7 +37,6 @@ private:
     PlayerController m_player_controller;
 
     StateStack m_state_stack;
-    ldtk::Project m_ldtk_project;
 
     // Statistic stuff
     sf::Font m_statistic_font;

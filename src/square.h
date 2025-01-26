@@ -15,8 +15,6 @@ public:
     {
         Self,
         Enemy0,
-        Enemy1,
-        Enemy2,
         TypeCount
     };
 public:

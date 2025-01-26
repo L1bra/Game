@@ -1,15 +1,19 @@
 #include "entity.h"
 
 Entity::Entity(int hitpoints)
+    :
+    m_hitpoints(hitpoints)
 {
 }
 
 void Entity::heal(int points)
 {
+    m_hitpoints += points;
 }
 
 void Entity::damage(int points)
 {
+    m_hitpoints -= points;
 }
 
 void Entity::destroy()
@@ -18,7 +22,7 @@ void Entity::destroy()
 
 int Entity::get_hitpoints() const
 {
-    return 0;
+    return m_hitpoints;
 }
 
 bool Entity::is_destroyed() const

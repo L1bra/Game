@@ -2,7 +2,7 @@
 
 #include "command.h"
 #include "command_queue.h"
-#include "magic.h"
+#include "square.h"
 
 #include <SFML/Window/Event.hpp>
 

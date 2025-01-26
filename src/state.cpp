@@ -2,13 +2,12 @@
 #include "state_stack.h"
 
 
-State::Context::Context(Window& window, TextureHolder& textures, FontHolder& fonts, PlayerController& player_controller, ldtk::Project& project)
+State::Context::Context(Window& window, TextureHolder& textures, FontHolder& fonts, PlayerController& player_controller)
 	:
 	m_window(&window),
 	m_textures(&textures),
 	m_fonts(&fonts),
-	m_player_controller(&player_controller),
-	m_ldtk_project(&project)
+	m_player_controller(&player_controller)
 {
 }
 

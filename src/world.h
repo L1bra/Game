@@ -51,10 +51,6 @@ private:
         float y;
     };
 private:
-    // ldtk::Project& m_ldtk_project;
-    // TileMap m_tile_map;
-
-    //PlayerController& m_player_controller;
     Square* m_player_entity;
 
     sf::RenderTarget& m_target;

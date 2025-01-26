@@ -8,22 +8,12 @@ Application::Application()
     m_player_controller(),
     m_textures(),
     m_fonts(),
-    m_ldtk_project(),
-    m_state_stack(State::Context(m_window, m_textures, m_fonts, m_player_controller, m_ldtk_project)),
+    m_state_stack(State::Context(m_window, m_textures, m_fonts, m_player_controller)),
     m_statistic_font(m_fonts.loadFont(Fonts::Main, "assets/fonts/PixellettersFull.ttf")),
     m_statistic_text(m_fonts.get(Fonts::Main)),
     m_statistic_update_time(),
     m_statistic_num_frames(0)
 {
-    try
-    {
-        m_ldtk_project.loadFromFile("assets/levels/Example.ldtk");
-    }
-    catch (std::exception& ex)
-    {
-        std::cerr << ex.what() << "\n";
-    }
-
     m_window.get_SFML_window().setKeyRepeatEnabled(false);
 
     //m_fonts.load(Fonts::Main, "assets/fonts/PixellettersFull.ttf");

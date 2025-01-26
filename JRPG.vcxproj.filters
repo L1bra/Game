@@ -15,7 +15,7 @@
     <ClCompile Include="src\menu_state.cpp" />
     <ClCompile Include="src\pause_state.cpp" />
     <ClCompile Include="src\player_controller.cpp" />
-    <ClCompile Include="src\magic.cpp" />
+    <ClCompile Include="src\square.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene_node.cpp" />
     <ClCompile Include="src\settings_state.cpp" />
@@ -146,7 +146,7 @@
     <ClInclude Include="src\menu_state.h" />
     <ClInclude Include="src\pause_state.h" />
     <ClInclude Include="src\player_controller.h" />
-    <ClInclude Include="src\magic.h" />
+    <ClInclude Include="src\square.h" />
     <ClInclude Include="src\resource_identifier.h" />
     <ClInclude Include="src\resource_manager.h" />
     <ClInclude Include="src\scene_node.h" />
