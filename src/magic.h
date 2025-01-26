@@ -8,7 +8,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 
 
-class GameActor : public Entity
+class Square : public Entity
 {
 public:
     enum Type
@@ -20,12 +20,11 @@ public:
         TypeCount
     };
 public:
-    GameActor(Type type, const TextureHolder& textures, const FontHolder& fonts);
-    ~GameActor();
+    Square(Type type, const TextureHolder& textures, const FontHolder& fonts, bool is_player = false);
+    ~Square();
 
     virtual unsigned int get_category() const;
-    sf::RectangleShape& get_character_sprite();
-private:
+
     virtual void update_current(sf::Time dt) override;
     virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -33,8 +32,8 @@ private:
 public:
     Type m_type;
 private:
-    // sf::Sprite m_sprite;
-    sf::RectangleShape m_shape;
-
+    sf::VertexArray m_vertices;
     TextNode* m_health_display;
+
+    bool is_player = false;
 };

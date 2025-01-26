@@ -90,7 +90,6 @@ void Application::input()
 
 void Application::update(sf::Time dt)
 {
-
     m_state_stack.update(dt);
 }
 

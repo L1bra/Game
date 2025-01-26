@@ -9,52 +9,86 @@ namespace
 }
 
 
-GameActor::GameActor(Type type, const TextureHolder& textures, const FontHolder& fonts)
+Square::Square(Type type, const TextureHolder& textures, const FontHolder& fonts, bool is_player)
 	:
     Entity(DataTable[type].hitpoints),
     m_type(type),
-    m_shape({16.f, 16.f})
+    m_vertices(DataTable[type].quad),
+    is_player(is_player)
+    //m_shape({16.f, 16.f})
 {
-    m_shape.setFillColor(sf::Color::Yellow);
-    sf::FloatRect bounds = m_shape.getLocalBounds();
-	m_shape.setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
+    // quad at (10, 10), size 100x100
+    //m_vertices[0].position = sf::Vector2f({ 10.f, 10.f });
+    //m_vertices[1].position = sf::Vector2f({ 110.f, 10.f });
+    //m_vertices[2].position = sf::Vector2f({ 110.f, 110.f });
+    //m_vertices[3].position = sf::Vector2f({ 10.f, 110.f });
+    //m_vertices[4].position = sf::Vector2f({ 110.f, 10.f });
+    //m_vertices[5].position = sf::Vector2f({ 110.f, 110.f });
+
+    // color
+    //m_vertices[0].color = sf::Color::Yellow;
+    //m_vertices[1].color = sf::Color::Yellow;
+    //m_vertices[2].color = sf::Color::Yellow;
+    //m_vertices[3].color = sf::Color::Yellow;
+    //m_vertices[4].color = sf::Color::Yellow;
+    //m_vertices[5].color = sf::Color::Yellow;
+
+    //m_shape.setFillColor(sf::Color::Yellow);
+    //sf::FloatRect bounds = m_shape.getLocalBounds();
+	//m_shape.setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
 
     std::unique_ptr<TextNode> health_display = std::make_unique<TextNode>(fonts, "");
     m_health_display = health_display.get();
     this->attach_child(std::move(health_display));
 }
 
-GameActor::~GameActor()
+Square::~Square()
 {
 }
 
-void GameActor::update_current(sf::Time dt)
+void Square::update_current(sf::Time dt)
 {
-    (this->get_velocity().x || this->get_velocity().y) ? m_shape.setFillColor(sf::Color::Red) : m_shape.setFillColor(sf::Color::Yellow);
+    if (is_player)
+    {
+        if (this->get_velocity().x || this->get_velocity().y)
+        {
+            m_vertices[0].color = sf::Color::Red;
+            m_vertices[1].color = sf::Color::Red;
+            m_vertices[2].color = sf::Color::Red;
+            m_vertices[3].color = sf::Color::Red;
+            m_vertices[4].color = sf::Color::Red;
+            m_vertices[5].color = sf::Color::Red;
+        }
+        else
+        {
+            m_vertices[0].color = sf::Color::Yellow;
+            m_vertices[1].color = sf::Color::Yellow;
+            m_vertices[2].color = sf::Color::Yellow;
+            m_vertices[3].color = sf::Color::Yellow;
+            m_vertices[4].color = sf::Color::Yellow;
+            m_vertices[5].color = sf::Color::Yellow;
+        }
+    }
 
     Entity::update_current(dt);
 
     update_texts();
 }
 
-void GameActor::draw_current(sf::RenderTarget& target, sf::RenderStates states) const
+void Square::draw_current(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(m_shape, states);
+    target.draw(m_vertices, states);
 }
 
-void GameActor::update_texts()
+void Square::update_texts()
 {
     m_health_display->set_string(std::to_string(get_hitpoints()) + "HP");
-    m_health_display->setPosition({ 0.f, 20.f });
+    m_health_display->setPosition({ 0.f, 0.f });
     //m_health_display->setRotation(-getRotation());
 }
 
-sf::RectangleShape& GameActor::get_character_sprite()
-{
-    return m_shape;
-}
 
-unsigned int GameActor::get_category() const
+unsigned int Square::get_category() const
 {
      switch (m_type)
      {

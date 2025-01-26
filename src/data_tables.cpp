@@ -4,26 +4,43 @@
 
 std::vector<EntityData> initialize_entity_data()
 {
-    std::vector<EntityData> data(GameActor::TypeCount);
+    std::vector<EntityData> data(Square::TypeCount);
 
-    //data[GameActor::Self].hitpoints = 100;
-    //data[GameActor::Self].speed = 200.f;
-    //data[GameActor::Self].shape.setFillColor(sf::Color::Yellow);
+    // Player
+    data[Square::Self].quad[0].position = sf::Vector2f({ 16.f, 16.f });
+    data[Square::Self].quad[1].position = sf::Vector2f({ 32.f, 16.f });
+    data[Square::Self].quad[2].position = sf::Vector2f({ 32.f, 32.f });
+    data[Square::Self].quad[3].position = sf::Vector2f({ 16.f, 32.f });
+    data[Square::Self].quad[4].position = sf::Vector2f({ 16.f, 16.f });
+    data[Square::Self].quad[5].position = sf::Vector2f({ 32.f, 32.f });
 
-    data[GameActor::Enemy0].hitpoints = 100;
-    data[GameActor::Enemy0].speed = 200.f;
-    data[GameActor::Enemy0].shape.setSize({16.f, 16.f});
-    data[GameActor::Enemy0].shape.setFillColor(sf::Color::Red);
+    data[Square::Self].quad[0].color = sf::Color::Yellow;
+    data[Square::Self].quad[1].color = sf::Color::Yellow;
+    data[Square::Self].quad[2].color = sf::Color::Yellow;
+    data[Square::Self].quad[3].color = sf::Color::Yellow;
+    data[Square::Self].quad[4].color = sf::Color::Yellow;
+    data[Square::Self].quad[5].color = sf::Color::Yellow;
 
-    data[GameActor::Enemy1].hitpoints = 100;
-    data[GameActor::Enemy1].speed = 200.f;
-    data[GameActor::Enemy1].shape.setSize({ 16.f, 16.f });
-    data[GameActor::Enemy1].shape.setFillColor(sf::Color::Blue);
+    data[Square::Self].hitpoints = 100;
+    data[Square::Self].speed = 200.f;
 
-    data[GameActor::Enemy2].hitpoints = 100;
-    data[GameActor::Enemy2].speed = 200.f;
-    data[GameActor::Enemy2].shape.setSize({ 16.f, 16.f });
-    data[GameActor::Enemy2].shape.setFillColor(sf::Color::Magenta);
+    // Enemy 0
+    data[Square::Enemy0].quad[0].position = sf::Vector2f({16.f, 16.f});
+    data[Square::Enemy0].quad[1].position = sf::Vector2f({32.f, 16.f});
+    data[Square::Enemy0].quad[2].position = sf::Vector2f({32.f, 32.f});
+    data[Square::Enemy0].quad[3].position = sf::Vector2f({16.f, 32.f});
+    data[Square::Enemy0].quad[4].position = sf::Vector2f({16.f, 16.f});
+    data[Square::Enemy0].quad[5].position = sf::Vector2f({32.f, 32.f});
+
+    data[Square::Enemy0].quad[0].color = sf::Color::Red;
+    data[Square::Enemy0].quad[1].color = sf::Color::Red;
+    data[Square::Enemy0].quad[2].color = sf::Color::Red;
+    data[Square::Enemy0].quad[3].color = sf::Color::Red;
+    data[Square::Enemy0].quad[4].color = sf::Color::Red;
+    data[Square::Enemy0].quad[5].color = sf::Color::Red;
+
+    data[Square::Enemy0].hitpoints = 100;
+    data[Square::Enemy0].speed = 200.f;
 
     return data;
 }

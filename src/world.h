@@ -8,10 +8,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <LDtkLoader/Project.hpp>
-#include "tile_map.h"
-
-
 class World
 {
 public:
@@ -28,18 +24,38 @@ public:
     // TODO:
     CommandQueue& get_command_queue();
 private:
+    void add_enemy(Square::Type type, float x, float y);
+    void add_enemies();
+    void spawn_enemies();
+
+private:
     enum Layer
     {
         Background,
         Ground,
         LayerCount
     };
+
+    struct SpawnPoint
+    {
+        SpawnPoint(Square::Type type, float x, float y)
+            :
+            type(type),
+            x(x),
+            y(y)
+        {
+        }
+
+        Square::Type type;
+        float x;
+        float y;
+    };
 private:
     // ldtk::Project& m_ldtk_project;
     // TileMap m_tile_map;
 
     //PlayerController& m_player_controller;
-    GameActor* m_player_entity;
+    Square* m_player_entity;
 
     sf::RenderTarget& m_target;
     TextureHolder m_textures;
@@ -54,4 +70,8 @@ private:
     sf::View m_world_view;
     sf::Vector2f m_spawn_position;
     float m_scroll_speed;
+
+    int m_total_enemies;
+    std::vector<SpawnPoint> m_enemy_spawn_points;
+    std::vector<Square*> m_active_enemies;
 };

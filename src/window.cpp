@@ -57,7 +57,7 @@ void Window::set_view(const sf::View& view) const
 void Window::resize_view()
 {
     float ap = float(this->get_SFML_window().getSize().x) / float(this->get_SFML_window().getSize().y);
-    auto view = this->get_view();
+    sf::View view = this->get_view();
     view.setSize({ static_cast<float>(m_gfx->resolution.size.x) * ap, static_cast<float>(m_gfx->resolution.size.y) });
 }
 

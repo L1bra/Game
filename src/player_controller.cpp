@@ -11,7 +11,7 @@ struct MagicMover
 	{
 	}
 
-	void operator() (GameActor& magic, sf::Time) const
+	void operator() (Square& magic, sf::Time) const
 	{
 		magic.accelerate(m_velocity);
 	}
@@ -89,10 +89,10 @@ void PlayerController::initialize_actions()
 {
 	const float player_speed = 200.f;
 
-	m_action_binding[MoveLeft].action	= derived_action<GameActor>(MagicMover(-player_speed, 0.f));
-	m_action_binding[MoveRight].action	= derived_action<GameActor>(MagicMover(+player_speed, 0.f));
-	m_action_binding[MoveUp].action		= derived_action<GameActor>(MagicMover(0.f, -player_speed));
-	m_action_binding[MoveDown].action	= derived_action<GameActor>(MagicMover(0.f, +player_speed));
+	m_action_binding[MoveLeft].action	= derived_action<Square>(MagicMover(-player_speed, 0.f));
+	m_action_binding[MoveRight].action	= derived_action<Square>(MagicMover(+player_speed, 0.f));
+	m_action_binding[MoveUp].action		= derived_action<Square>(MagicMover(0.f, -player_speed));
+	m_action_binding[MoveDown].action	= derived_action<Square>(MagicMover(0.f, +player_speed));
 }
 
 bool PlayerController::is_realtime_action(Action action)

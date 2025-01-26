@@ -14,7 +14,7 @@ struct EntityData
 {
     int hitpoints = 0;
     float speed = 0.0f;
-    sf::RectangleShape shape;
+    sf::VertexArray quad{ sf::PrimitiveType::Triangles, 6 };
 };
 
 std::vector<EntityData>      initialize_entity_data();

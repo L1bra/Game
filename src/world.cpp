@@ -1,34 +1,37 @@
 #include "world.h"
-#include <cmath>
 
+#include <cmath>
+#include <cstdlib>
 
 World::World(sf::RenderTarget& target, FontHolder& fonts)
 	:
 	m_target(target),
-    // m_ldtk_project(*context.m_ldtk_project),
-    // m_tile_map(),
-	//m_player_controller(*context.m_player_controller),
 	m_player_entity(nullptr),
-	//m_window(*context.m_window),
 	m_textures(),
 	m_fonts(fonts),
 	m_scene_graph(),
 	m_scene_layers(),
-	m_background_shape({2000.f, 2000.f}),
-	m_world_view(sf::Vector2f{ 0.f, 0.f }, sf::Vector2f{ 640.f, 360.f }),
-	m_world_bounds({ 0.f, 0.f }, { m_world_view.getSize().x, 2000.f }), // TODO
-    m_spawn_position({ m_background_shape.getSize().x / 2.f, m_background_shape.getSize().y / 2.f})
+	m_background_shape({10000.f, 10000.f}),
+	m_world_view({ 0.f, 0.f }, { static_cast<float>(m_target.getSize().x), static_cast<float>(m_target.getSize().y) }), // 640 360
+	m_world_bounds({ 0.f, 0.f }, { m_world_view.getSize().x, 2000.f }),
+    m_spawn_position({ m_background_shape.getSize().x / 2.f, m_background_shape.getSize().y / 2.f}),
+	m_total_enemies(100),
+	m_enemy_spawn_points(),
+	m_active_enemies()
 {
+	m_active_enemies.reserve(m_total_enemies);
+	m_enemy_spawn_points.reserve(m_total_enemies);
+
 	load_textures();
 	build_scene();
 
 	m_world_view.setCenter(m_spawn_position);
+
+	srand(static_cast<unsigned>(time(0))); // Seed for randomness
 }
 
 void  World::update(sf::Time dt)
 {
-	// Scroll the world
-	//m_world_view.move({ 0.f, m_scroll_speed * dt.asSeconds() });
     m_player_entity->set_velocity(0.f, 0.f);
 
 	//m_player_controller.handle_realtime_input(m_command_queue);
@@ -41,6 +44,8 @@ void  World::update(sf::Time dt)
 
 	adapt_player_velocity();
 
+	spawn_enemies();
+
 	// Apply movement
 	m_scene_graph.update(dt);
     m_world_view.setCenter(m_player_entity->getPosition());
@@ -49,11 +54,10 @@ void  World::update(sf::Time dt)
 
 void World::draw()
 {
-	//m_window.set_view(m_world_view);
-	// Window class internally calls SceneNode::draw() function
+	m_target.setView(m_world_view);
 	m_target.draw(m_background_shape);
+	// Window class internally calls SceneNode::draw() function
 	m_target.draw(m_scene_graph);
-	//m_window.draw(m_tile_map.get_layer("Terrain"));
 }
 
 void World::load_textures()
@@ -65,16 +69,6 @@ void World::load_textures()
 
 void World::build_scene()
 {
-    // const auto& world = m_ldtk_project.getWorld();
-    // const auto& level = world.getLevel("World_Level_0");
-    // const auto& layer = level.getLayer("Terrain");
-	//const auto& tiles_vector = layer.allTiles();
-
-    // const auto& layers = layer.getTileset();
-
-    // TileMap::path = m_ldtk_project.getFilePath().directory();
-    // m_tile_map.set_level(level);
-
     m_background_shape.setPosition({0.f, 0.f});
 	m_background_shape.setFillColor(sf::Color::Black);
 
@@ -95,16 +89,51 @@ void World::build_scene()
     // m_scene_layers[Layer::Background]->attach_child(std::move(background_sprite));
 
 	// Add player
-    std::unique_ptr<GameActor> magic = std::make_unique<GameActor>(GameActor::Type::Self, m_textures, m_fonts);
+    std::unique_ptr<Square> magic = std::make_unique<Square>(Square::Type::Self, m_textures, m_fonts, true);
     m_player_entity = magic.get();
     m_player_entity->setPosition(m_spawn_position);
     m_player_entity->set_velocity(100.f, 100.f);
     m_scene_layers[Layer::Ground]->attach_child(std::move(magic));
+	
+	add_enemies();
 }
 
 CommandQueue& World::get_command_queue()
 {
 	return m_command_queue;
+}
+
+void World::add_enemy(Square::Type type, float rel_x, float rel_y)
+{
+	SpawnPoint point{ type, m_spawn_position.x + rel_x, m_spawn_position.y + rel_y };
+	m_enemy_spawn_points.push_back(point);
+}
+
+void World::add_enemies()
+{
+	// TODO: replace rand with c++ random	
+	for (int i = 1; i < m_total_enemies; i++)
+	{
+		float offset_x = (rand() % 2000) - 1000;
+		float offset_y = (rand() % 2000) - 1000;
+		add_enemy(Square::Type::Enemy0, offset_x, offset_y);
+	}
+}
+
+void World::spawn_enemies()
+{
+	while (!m_enemy_spawn_points.empty())
+	{
+		SpawnPoint point = m_enemy_spawn_points.back();
+
+		std::unique_ptr<Square> enemy = std::make_unique<Square>(point.type, m_textures, m_fonts);
+		enemy->setPosition({ point.x, point.y });
+		//enemy->setRotation(180.f);
+
+		m_scene_layers[Layer::Ground]->attach_child(std::move(enemy));
+
+		m_enemy_spawn_points.pop_back();
+	}
 }
 
 void World::adapt_player_position()
